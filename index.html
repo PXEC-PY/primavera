@@ -1,0 +1,582 @@
+<title>Cinco Girasoles</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Work+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#FFF3D8;
+    --bg-soft:#FFE7AF;
+    --surface:#FFFCF4;
+    --surface-2:#FFF6E1;
+    --ink:#2A1A0E;
+    --ink-muted:#71542F;
+    --accent:#E0900F;
+    --accent-strong:#A94E09;
+    --leaf:#4F7A3D;
+    --stem:#5C7A3B;
+    --line:rgba(42,26,14,.18);
+    --shadow:rgba(42,26,14,.25);
+    --paper:#FFFCF2;
+    --paper-ink:#2A1A0E;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#190F2B;
+      --bg-soft:#241638;
+      --surface:#221534;
+      --surface-2:#2B1A40;
+      --ink:#FAEEDA;
+      --ink-muted:#CBB6D9;
+      --accent:#F2A93B;
+      --accent-strong:#FFC468;
+      --leaf:#86BE70;
+      --stem:#6E9A56;
+      --line:rgba(250,238,218,.18);
+      --shadow:rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#190F2B;
+    --bg-soft:#241638;
+    --surface:#221534;
+    --surface-2:#2B1A40;
+    --ink:#FAEEDA;
+    --ink-muted:#CBB6D9;
+    --accent:#F2A93B;
+    --accent-strong:#FFC468;
+    --leaf:#86BE70;
+    --stem:#6E9A56;
+    --line:rgba(250,238,218,.18);
+    --shadow:rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', system-ui, -apple-system, sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+
+  .display{
+    font-family:'Fraunces', Georgia, serif;
+    font-optical-sizing:auto;
+    text-wrap:balance;
+  }
+  .script{ font-family:'Caveat', cursive; }
+
+  a{ color:var(--accent-strong); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  .eyebrow{
+    font-family:'Work Sans', sans-serif;
+    font-size:.78rem;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent-strong);
+  }
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding-inline:20px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding-block:56px 40px;
+    background:
+      radial-gradient(120% 90% at 50% 0%, var(--bg-soft) 0%, var(--bg) 62%);
+    overflow:hidden;
+    text-align:center;
+  }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero .eyebrow{ display:block; margin-bottom:14px; }
+  .hero h1{
+    margin:0 auto 16px;
+    max-width:15ch;
+    font-size:clamp(1.9rem, 5vw + 1rem, 3.1rem);
+    font-weight:600;
+    font-style:italic;
+    line-height:1.12;
+  }
+  .hero p.lede{
+    max-width:44ch;
+    margin:0 auto;
+    color:var(--ink-muted);
+    font-size:1.05rem;
+  }
+
+  .flower-stage{
+    margin:28px auto 6px;
+    width:min(78vw, 260px);
+  }
+  .flower-stage svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .flower-hint{
+    font-size:.82rem;
+    color:var(--ink-muted);
+    font-style:italic;
+  }
+
+  @keyframes sway{
+    0%,100%{ transform:rotate(-2.5deg); }
+    50%{ transform:rotate(2.5deg); }
+  }
+  .flower-idle{
+    transform-box:fill-box;
+    transform-origin:50% 100%;
+    animation:sway 6.5s ease-in-out infinite;
+  }
+  .flower-tracked{
+    transform-box:fill-box;
+    transform-origin:50% 100%;
+    transition:transform .7s cubic-bezier(.22,1,.36,.94);
+  }
+
+  /* ---------- Story ---------- */
+  .story{
+    padding-block:52px;
+  }
+  .story-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:28px;
+    align-items:start;
+  }
+  .story h2{
+    font-size:1.5rem;
+    font-weight:600;
+    font-style:italic;
+    margin:0 0 14px;
+  }
+  .story p{ margin:0 0 14px; color:var(--ink-muted); }
+  .story p:last-child{ margin-bottom:0; }
+  .story-stem{ width:28px; opacity:.85; align-self:stretch; }
+  .story-stem svg{ height:100%; width:100%; }
+  @media (max-width:560px){
+    .story-grid{ grid-template-columns:1fr; }
+    .story-stem{ display:none; }
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery-section{
+    background:var(--bg-soft);
+    padding-block:56px;
+  }
+  .gallery-section .eyebrow{ display:block; text-align:center; margin-bottom:8px; }
+  .gallery-section h2{
+    text-align:center;
+    font-size:1.6rem;
+    font-weight:600;
+    font-style:italic;
+    margin:0 0 36px;
+  }
+  .gallery{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:34px 22px;
+    padding-block:10px 4px;
+  }
+  .polaroid{
+    position:relative;
+    background:var(--paper);
+    padding:14px 14px 20px;
+    width:min(84vw, 260px);
+    box-shadow:0 14px 28px -12px var(--shadow), 0 2px 6px var(--shadow);
+    transition:transform .25s ease;
+  }
+  .polaroid:hover, .polaroid:focus-within{ transform:translateY(-6px) rotate(0deg) !important; }
+  .polaroid:nth-child(1){ transform:rotate(-4deg); }
+  .polaroid:nth-child(2){ transform:rotate(3deg) translateY(10px); }
+  .polaroid:nth-child(3){ transform:rotate(-2deg); }
+  .polaroid .pin{
+    position:absolute;
+    top:-9px; left:50%;
+    transform:translateX(-50%);
+    width:16px; height:16px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--accent-strong), var(--accent-strong) 40%, var(--accent) 100%);
+    box-shadow:0 3px 5px var(--shadow);
+  }
+  .polaroid img{
+    display:block;
+    width:100%;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    background:var(--surface-2);
+  }
+  .polaroid figcaption{
+    margin-top:12px;
+    font-size:.92rem;
+    color:var(--paper-ink);
+    text-align:center;
+    font-style:italic;
+  }
+
+  /* ---------- Dedication ---------- */
+  .dedication-section{ padding-block:60px; }
+  .tag-card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    padding:40px clamp(20px,5vw,48px) 36px;
+    clip-path:polygon(
+      0% 1.5%, 4% 0%, 96% 0%, 100% 1.5%,
+      100% 98.5%, 96% 100%, 4% 100%, 0% 98.5%,
+      0% 52%, 1.4% 50%, 0% 48%
+    );
+    box-shadow:0 20px 40px -20px var(--shadow);
+  }
+  .tag-card .eyebrow{ display:block; text-align:center; margin-bottom:10px; }
+  .tag-card .lead-line{
+    text-align:center;
+    font-size:1.2rem;
+    font-style:italic;
+    margin:0 0 26px;
+  }
+  .reasons{
+    list-style:none;
+    margin:0 0 26px;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .reasons li{
+    display:flex;
+    gap:12px;
+    align-items:baseline;
+  }
+  .reasons .bud{
+    flex:none;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+    transform:translateY(-2px);
+  }
+  .reasons p{ margin:0; color:var(--ink); }
+  .tag-card .closing{
+    text-align:center;
+    font-size:1.15rem;
+    font-style:italic;
+    font-weight:500;
+    margin-top:8px;
+  }
+
+  /* ---------- Signature ---------- */
+  .signature{
+    text-align:center;
+    padding-block:8px 56px;
+  }
+  .signature .from{
+    color:var(--ink-muted);
+    font-size:.95rem;
+    margin-bottom:2px;
+  }
+  .signature .name{
+    font-size:2.6rem;
+    color:var(--accent-strong);
+    line-height:1;
+  }
+
+  /* ---------- QR / garden marker ---------- */
+  .qr-section{
+    background:var(--bg-soft);
+    padding-block:56px 64px;
+    display:flex;
+    justify-content:center;
+  }
+  .stake{
+    background:var(--paper);
+    color:var(--paper-ink);
+    width:min(86vw, 300px);
+    padding:26px 24px 30px;
+    text-align:center;
+    position:relative;
+    box-shadow:0 18px 34px -16px var(--shadow);
+    clip-path:polygon(0% 0%, 100% 0%, 100% 82%, 50% 100%, 0% 82%);
+    padding-bottom:70px;
+  }
+  .stake .eyebrow{ display:block; margin-bottom:10px; }
+  .stake h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-size:1.25rem;
+    margin:0 0 14px;
+  }
+  .qr-box{
+    background:#fff;
+    display:inline-block;
+    padding:10px;
+    border-radius:6px;
+    box-shadow:0 6px 14px -6px rgba(0,0,0,.35);
+  }
+  .qr-box canvas, .qr-box img{ display:block; }
+  .stake .hint{
+    margin-top:14px;
+    font-size:.85rem;
+    color:#71542F;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center;
+    padding:30px 20px 44px;
+    color:var(--ink-muted);
+    font-size:.85rem;
+  }
+  footer svg{ display:block; margin:0 auto 8px; opacity:.8; }
+</style>
+
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+const PETAL_COUNT = 15;
+
+function Sunflower({ tilt, idle }) {
+  const petals = Array.from({ length: PETAL_COUNT }).map((_, i) => {
+    const angle = (360 / PETAL_COUNT) * i;
+    return (
+      <ellipse
+        key={i}
+        cx="100" cy="52" rx="15" ry="40"
+        fill="var(--accent)"
+        transform={`rotate(${angle} 100 100)`}
+        opacity="0.96"
+      />
+    );
+  });
+
+  return (
+    <svg viewBox="0 0 200 340" role="img" aria-label="Un girasol que se inclina hacia ti">
+      <g
+        className={idle ? "flower-idle" : "flower-tracked"}
+        style={idle ? undefined : { transform: `rotate(${tilt}deg)` }}
+      >
+        <path
+          d="M100,134 C90,175 110,215 98,255 C90,285 104,310 100,335"
+          fill="none" stroke="var(--stem)" strokeWidth="6" strokeLinecap="round"
+        />
+        <path
+          d="M99,205 C70,200 55,220 48,246 C74,246 92,230 99,213 Z"
+          fill="var(--leaf)"
+        />
+        <path
+          d="M101,258 C128,254 144,272 150,296 C126,297 108,282 101,266 Z"
+          fill="var(--leaf)"
+        />
+        <g>{petals}</g>
+        <circle cx="100" cy="100" r="35" fill="var(--accent-strong)" />
+        <circle cx="100" cy="100" r="35" fill="url(#seeds)" opacity="0.55" />
+      </g>
+      <defs>
+        <pattern id="seeds" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="translate(65 65)">
+          <circle cx="3.5" cy="3.5" r="1.4" fill="#2A1A0E" opacity="0.5" />
+        </pattern>
+      </defs>
+    </svg>
+  );
+}
+
+function Hero() {
+  const [tilt, setTilt] = useState(0);
+  const [idle, setIdle] = useState(true);
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    function handleX(clientX) {
+      const el = heroRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const dx = clientX - centerX;
+      const norm = Math.max(-1, Math.min(1, dx / (rect.width / 2 + 160)));
+      setTilt(norm * 22);
+      setIdle(false);
+    }
+    function onMouse(e) { handleX(e.clientX); }
+    function onTouch(e) { if (e.touches && e.touches[0]) handleX(e.touches[0].clientX); }
+
+    window.addEventListener("mousemove", onMouse);
+    window.addEventListener("touchmove", onTouch, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", onMouse);
+      window.removeEventListener("touchmove", onTouch);
+    };
+  }, []);
+
+  return (
+    <section className="hero" ref={heroRef}>
+      <div className="wrap hero-inner">
+        <span className="eyebrow">Para Antonella · el día de la primera vera</span>
+        <h1 className="display">Como el girasol, mi mirada siempre te encuentra.</h1>
+        <p className="lede">Estos cinco girasoles llegan con algo más: unas palabras que no cupieron entre los pétalos.</p>
+        <div className="flower-stage">
+          <Sunflower tilt={tilt} idle={idle} />
+        </div>
+        <p className="flower-hint">gira el girasol moviendo el cursor o el dedo</p>
+      </div>
+    </section>
+  );
+}
+
+function StoryStem() {
+  return (
+    <svg viewBox="0 0 20 220" aria-hidden="true">
+      <path d="M10,4 C2,50 18,90 8,140 C1,175 15,200 10,216" fill="none" stroke="var(--stem)" strokeWidth="4" strokeLinecap="round" />
+      <ellipse cx="10" cy="70" rx="4" ry="14" fill="var(--leaf)" transform="rotate(35 10 70)" />
+      <ellipse cx="10" cy="150" rx="4" ry="14" fill="var(--leaf)" transform="rotate(-30 10 150)" />
+    </svg>
+  );
+}
+
+function Story() {
+  return (
+    <section className="story">
+      <div className="wrap story-grid">
+        <div>
+          <h2 className="display">Por qué un girasol, y no cualquier otra flor</h2>
+          <p>El girasol no espera a que la luz venga: la busca. Gira su cabeza desde que amanece hasta que oscurece, siempre hacia lo que lo hace crecer. Desde que te conozco, entendí ese gesto de otra manera: yo también empecé a girar hacia ti, sin darme del todo cuenta, en cada conversación, en cada plan pequeño que se volvió costumbre.</p>
+          <p>Por eso, para el día de la primera vera, no quería un ramo cualquiera. Quería cinco girasoles: uno por cada motivo que se me ocurrió a las tres de la mañana pensando en cómo decirte esto sin que sonara ensayado.</p>
+        </div>
+        <div className="story-stem"><StoryStem /></div>
+      </div>
+    </section>
+  );
+}
+
+const photos = [
+  { src: "images/photo1.jpg", alt: "Antonella y Francesco viendo el atardecer junto a la laguna", caption: "El atardecer que decidimos guardar" },
+  { src: "images/photo2.jpg", alt: "Antonella y Francesco juntos en el muelle", caption: "El muelle donde el tiempo se quedó quieto" },
+  { src: "images/photo3.jpg", alt: "Antonella y Francesco juntos al aire libre", caption: "El lugar donde, sin planearlo, te elegí" },
+];
+
+function Gallery() {
+  return (
+    <section className="gallery-section">
+      <div className="wrap">
+        <span className="eyebrow">Cuaderno de campo</span>
+        <h2 className="display">Tres momentos que ya son mis favoritos</h2>
+        <div className="gallery">
+          {photos.map((p, i) => (
+            <figure className="polaroid" key={i}>
+              <span className="pin" aria-hidden="true"></span>
+              <img src={p.src} alt={p.alt} loading="lazy" />
+              <figcaption>{p.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const reasons = [
+  "por cada mañana que empezó siendo mejor solo porque pensé en ti,",
+  "por cada risa tuya que se volvió, sin permiso, mi sonido favorito,",
+  "por cada silencio que contigo dejó de sentirse vacío,",
+  "por todo lo que todavía no vivimos y ya tengo ganas de vivir,",
+  "y porque, igual que ellos, no elijo mirar hacia otro lado: te elijo a ti, cada día, buscando la luz.",
+];
+
+function Dedication() {
+  return (
+    <section className="dedication-section">
+      <div className="wrap">
+        <div className="tag-card">
+          <span className="eyebrow">La dedicatoria</span>
+          <p className="lead-line display">Te entrego cinco girasoles, y con ellos, cinco razones:</p>
+          <ul className="reasons">
+            {reasons.map((r, i) => (
+              <li key={i}>
+                <span className="bud" aria-hidden="true"></span>
+                <p>{r}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="closing display">Feliz día de la primera vera, Antonella.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Signature() {
+  return (
+    <section className="signature">
+      <p className="from">Con todo mi cariño,</p>
+      <p className="name script">Francesco Páez</p>
+    </section>
+  );
+}
+
+function QrMarker() {
+  const boxRef = useRef(null);
+  useEffect(() => {
+    if (boxRef.current && window.QRCode && boxRef.current.childElementCount === 0) {
+      new QRCode(boxRef.current, {
+        text: "https://claude.ai/artifact/EBxmUgwvby8DMiHtw1bCgt",
+        width: 200,
+        height: 200,
+        colorDark: "#2A1A0E",
+        colorLight: "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.M,
+      });
+    }
+  }, []);
+
+  return (
+    <section className="qr-section">
+      <div className="stake">
+        <span className="eyebrow">Jardín digital</span>
+        <h3>Vuelve cuando quieras</h3>
+        <div className="qr-box" ref={boxRef}></div>
+        <p className="hint">Escanea el código pegado al ramo para reabrir esta página</p>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+        <path d="M11,3 C4,7 6,13 10,15 C6,13 3,17 4,21 C9,19 10,15 11,11 C12,15 13,19 18,21 C19,17 16,13 12,15 C16,13 18,7 11,3 Z" fill="var(--leaf)" />
+      </svg>
+      Hecho a mano (de código), para Antonella.
+    </footer>
+  );
+}
+
+function App() {
+  return (
+    <React.Fragment>
+      <Hero />
+      <Story />
+      <Gallery />
+      <Dedication />
+      <Signature />
+      <QrMarker />
+      <Footer />
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
