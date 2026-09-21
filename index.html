@@ -142,10 +142,8 @@
     padding-block:52px;
   }
   .story-grid{
-    display:grid;
-    grid-template-columns:1fr auto;
-    gap:28px;
-    align-items:start;
+    max-width:56ch;
+    margin-inline:auto;
   }
   .story h2{
     font-size:1.5rem;
@@ -155,12 +153,6 @@
   }
   .story p{ margin:0 0 14px; color:var(--ink-muted); }
   .story p:last-child{ margin-bottom:0; }
-  .story-stem{ width:28px; opacity:.85; align-self:stretch; }
-  .story-stem svg{ height:100%; width:100%; }
-  @media (max-width:560px){
-    .story-grid{ grid-template-columns:1fr; }
-    .story-stem{ display:none; }
-  }
 
   /* ---------- Gallery ---------- */
   .gallery-section{
@@ -436,26 +428,13 @@ function Hero() {
   );
 }
 
-function StoryStem() {
-  return (
-    <svg viewBox="0 0 20 220" aria-hidden="true">
-      <path d="M10,4 C2,50 18,90 8,140 C1,175 15,200 10,216" fill="none" stroke="var(--stem)" strokeWidth="4" strokeLinecap="round" />
-      <ellipse cx="10" cy="70" rx="4" ry="14" fill="var(--leaf)" transform="rotate(35 10 70)" />
-      <ellipse cx="10" cy="150" rx="4" ry="14" fill="var(--leaf)" transform="rotate(-30 10 150)" />
-    </svg>
-  );
-}
-
 function Story() {
   return (
     <section className="story">
       <div className="wrap story-grid">
-        <div>
-          <h2 className="display">Por qué un girasol, y no cualquier otra flor</h2>
-          <p>El girasol no espera a que la luz venga: la busca. Gira su cabeza desde que amanece hasta que oscurece, siempre hacia lo que lo hace crecer. Desde que te conozco, entendí ese gesto de otra manera: yo también empecé a girar hacia ti, sin darme del todo cuenta, en cada conversación, en cada plan pequeño que se volvió costumbre.</p>
-          <p>Por eso, para el día de la primera vera, no quería un ramo cualquiera. Quería cinco girasoles: uno por cada motivo que se me ocurrió a las tres de la mañana pensando en cómo decirte esto sin que sonara ensayado.</p>
-        </div>
-        <div className="story-stem"><StoryStem /></div>
+        <h2 className="display">Por qué un girasol, y no cualquier otra flor</h2>
+        <p>El girasol no espera a que la luz venga: la busca. Gira su cabeza desde que amanece hasta que oscurece, siempre hacia lo que lo hace crecer. Desde que te conozco, entendí ese gesto de otra manera: yo también empecé a girar hacia ti, sin darme del todo cuenta, en cada conversación, en cada plan pequeño que se volvió costumbre.</p>
+        <p>Por eso, para el día de la primera vera, no quería un ramo cualquiera. Quería cinco girasoles: uno por cada motivo que se me ocurrió a las tres de la mañana pensando en cómo decirte esto sin que sonara ensayado.</p>
       </div>
     </section>
   );
